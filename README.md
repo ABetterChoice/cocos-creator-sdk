@@ -44,9 +44,9 @@ const config = {
 
 > 在上报数据与实验分流之前，请先在微信公众平台或其他平台的开发设置中，将下面默认请求URL加入到服务器域名的 request 列表中，主要有：
 >
-> 分流URL：https://mobile.abetterchoice.cn/tab/get_experiments、https://mobile.abetterchoice.cn/tab/get_feature_flags
+> 分流URL：https://mobile.abetterchoice.cn
 >
-> 数据上报URL：https://data.abetterchoice.cn/v2/event/log、https://data.abetterchoice.cn/v2/exposure/log
+> 数据上报URL：https://data.abetterchoice.cn
 >
 > 若您使用的是私有化部署版本，请与运维同学确认上报地址
 
