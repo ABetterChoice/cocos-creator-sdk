@@ -123,11 +123,38 @@ ABetterChoice.logExperimentExposure(experiment);
 
 ### 2.6 获取配置开关
 
+假设您在配置与开关模块中创建开关与配置流程中没有进行配置条件，那么配置与开关将按照配置的流量比例进行下发；
+
 ```typescript
-// 获取配置开关名为：new_feature_flag的配置开关值信息
-const featureFlagInfo = ABetterChoice.getFeatureFlag("new_feature_flag");
-// 获取对应配置开关的参数值
-const boolValue = featureFlagInfo.getBoolValue(false);
+// 获取配置开关参数名称为：new_feature_flag的配置开关值信息
+const configInfo = ABetterChoice.getConfig("new_feature_flag");
+// 获取对应配置开关的参数值,其中参数为默认值
+const boolValue = configInfo?.getBoolValue(false);
+// 其它根据平台配置的值类型进而获取不同的类型值
+// const stringValue = configInfo?.getStringValue('banner');
+// const numberValue = configInfo?.getNumberValue(1000);
+```
+若配置了条件，如下图创建所示，假设您创造了开关配置参数名称为'new_feature_flag'，配置条件配置参数属性为'city'与'age'，条件参数属性值为'shenzhen'与'18'，则满足这个条件则会进行下发布尔值true。
+
+![IMG](https://cdn.abetterchoice.cn/static/cms/5640e1e9ac.jpeg)
+
+```typescript
+// 初始化SDK时需配置条件属性：attributes
+var config = {
+  .......
+  .......
+  // 配置条件属性
+  attributes: {
+    city: ['shenzhen'],
+    age: ['18']
+  }
+}
+......
+......
+// 获取配置开关参数名称为：new_feature_flag的配置开关值信息
+const configInfo = ABetterChoice.getConfig("new_feature_flag");
+// 获取对应配置开关的参数值,其中参数为默认值
+const boolValue = configInfo?.getBoolValue(false);
 ```
 
 ## 三、最佳实践
