@@ -24,12 +24,12 @@
 ```typescript
 const config = {
   gameId: "YOUR_GAME_ID", // 项目游戏ID，必选，可以在ABetterChoice平台管理页查看
-  secretKey: "YOUR_SECRET_KEY"，// 项目API KEY，必选，可以在ABetterChoice平台管理页查看
+  secretKey: "YOUR_SECRET_KEY", // 项目API KEY，必选，可以在ABetterChoice平台管理页查看
   unitId: "login_unitId", // 登陆的用户帐号，必选，若不填，则在login之前都用访客ID做用户ID，可能会导致数据计算有误差
   autoTrack: {   // 可选，自动采集配置，默认全部关闭
     mgShow: true,  // 自动采集，小程序启动，或从后台进入前台，可选
-  	mgHide: true,  // 自动采集，小程序从前台进入后台，可选
-  	mgShare: true, // 自动采集，小程序分享时自动采集，可选
+    mgHide: true,  // 自动采集，小程序从前台进入后台，可选
+    mgShare: true, // 自动采集，小程序分享时自动采集，可选
   }
 }
 ```
@@ -140,8 +140,8 @@ const config = {
   unitId: "YOUR_LOGGIN_USER_ID", //用户帐号ID，必选，若不填，则在login之前都用访客ID做用户ID，可能会导致数据计算有误差
   autoTrack: {   // 可选，自动采集配置
     mgShow: true,  // 自动采集，小程序启动，或从后台进入前台
-  	mgHide: true,  // 自动采集，小程序从前台进入后台
-  	mgShare: true, // 自动采集，小程序分享时自动采集
+    mgHide: true,  // 自动采集，小程序从前台进入后台
+    mgShare: true, // 自动采集，小程序分享时自动采集
   }
 };
 // 打开SDK日志，默认关闭，上线前可关闭
@@ -154,7 +154,7 @@ if (initResult) {
 // 用户的登录帐号唯一标识，此数据对应上报数据里的user_id，此时user_id的值为ABC，相当于配置初始化参数unitId，若上面配置初始化参数已填，可不使用
 ABetterChoice.login('ABC');
 // 设置公共事件属性
-var commonProperties = {
+const commonProperties = {
     channel : "ta", //字符串
     age : 1,//数字
     isSuccess : true,//布尔
