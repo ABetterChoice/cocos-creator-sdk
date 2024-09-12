@@ -37,6 +37,7 @@ const config = {
 配置对象**Config**其他可选参数说明：
 
 - **serverUrl**：可选，数据上报地址域名，默认是 https://data.abetterchoice.cn/。
+- **attributes**:  可选，实验分流属性条件使用，类型为{ string : string[] }，其中string为条件属性，string[]为对应的条件属性值数组
 - **enableAutoExposure**：可选，实验分流使用，默认值为false。如果设置为true，当调用AB实验分流时，曝光数据将自动上报。
 - **enableAutoPoll**：可选，实验分流使用，默认值为true。如果设置为true，实验和功能标志数据将每10分钟轮询并更新。
 
