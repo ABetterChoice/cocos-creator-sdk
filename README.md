@@ -69,13 +69,13 @@ ABetterChoice.login('ABC');
 
 ```typescript
 var commonProperties = {
-  	vipSource: "ABC", //字符串
-  	vipLevel: 1,//数字
-  	isVip: true,//布尔
-  	birthday: new Date(),//对象
-  	object: { key: "value" },//对象
-  	object_arr: [{ key: "value" }],//对象组
-  	arr: ["value"]//数组
+    vipSource: "ABC", //字符串
+    vipLevel: 1,//数字
+    isVip: true,//布尔
+    birthday: new Date(),//对象
+    object: { key: "value" },//对象
+    object_arr: [{ key: "value" }],//对象组
+    arr: ["value"]//数组
 };
 // 设置公共属性
 ABetterChoice.setCommonProperties(commonProperties);
@@ -105,9 +105,9 @@ ABetterChoice.track({
 // 获取实验分流信息
 const experiment = ABetterChoice.getExperiment('abc_layer_name');
 if (experiment === undefined) {
-	// 无命中，执行默认版本
-	handleView('无命中实验，执行默认版本');
-	return;
+    // 无命中，执行默认版本
+    handleView('无命中实验，执行默认版本');
+    return;
 }
 // 现在您可以获取参数并在代码中直接使用这些参数。
 const shouldShowBanner = experiment.getBoolValue("should_show_banner", true);
@@ -131,7 +131,7 @@ const boolValue = featureFlagInfo.getBoolValue(false);
 
 ## 三、最佳实践
 
-[下载CocosCreator SDK (下载CocosCreator SDK)](https://download.thinkingdata.cn/client/release/ta_mg_sdk.zip)，根据上面集成SDK的方式引入对应的 SDK 文件之后，您就可以在代码中直接使用 SDK功能，并开始上报数据了：
+[下载CocosCreator SDK](https://download.thinkingdata.cn/client/release/ta_mg_sdk.zip)，根据上面集成SDK的方式引入对应的 SDK 文件之后，您就可以在代码中直接使用 SDK功能，并开始上报数据了：
 
 ```typescript
 const config = {
