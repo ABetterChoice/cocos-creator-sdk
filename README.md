@@ -24,7 +24,7 @@
 ```typescript
 const config = {
   gameId: "YOUR_GAME_ID", // 项目游戏ID，必选，可以在ABetterChoice平台管理页查看
-  secretKey: "YOUR_SECRET_KEY", // 项目API KEY，必选，可以在ABetterChoice平台管理页查看
+  apiKey: "YOUR_SECRET_KEY", // 项目API KEY，必选，可以在ABetterChoice平台管理页查看
   unitId: "login_unitId", // 登陆的用户帐号，必选，若不填，则在login之前都用访客ID做用户ID，可能会导致数据计算有误差
   autoTrack: {   // 可选，自动采集配置，默认全部关闭
     mgShow: true,  // 自动采集，小程序启动，或从后台进入前台，可选
