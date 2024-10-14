@@ -23,7 +23,7 @@
 初始化配置参数与启动SDK
 
 ```typescript
-// 初始化配置参数
+// 1. 初始化配置参数
 const config = {
   gameId: "YOUR_GAME_ID", // 项目游戏ID，必选，可以在ABetterChoice平台管理页查看
   apiKey: "YOUR_API_KEY", // 项目API KEY，必选，可以在ABetterChoice平台管理页查看
@@ -34,14 +34,14 @@ const config = {
   }
 };
 
-// 可选，打开SDK日志，默认关闭，上线前可关闭
+// 2. 可选，打开SDK日志，默认关闭，上线前可关闭
 ABetterChoice.setLogLevel(0);
 
-// 必须，初始化并启动SDK，必须先调用，确保SDK初始化成功后再执行功能方法
+// 3. 必须，初始化并启动SDK，必须先调用，确保SDK初始化成功后再执行功能方法
 ABetterChoice.init(config).then((initResult) => {
    console.log('初始化结果：' + initResult)
   
-   // 必须，用户的登录唯一标识，此数据对应上报数据里的user_id，此时user_id的值为ABC
+   // 4. 必须，用户的登录唯一标识，此数据对应上报数据里的user_id，此时user_id的值为ABC
    ABetterChoice.login('ABC');
 };
 ```
