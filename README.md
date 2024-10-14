@@ -1,4 +1,5 @@
 # cocos-creator-sdk
+
 ## 提示
 
 > 在接入前，请先阅读接入前准备
@@ -19,21 +20,30 @@
 
 如果您的项目是 JavaScript 工程，您可以直接将 SDK 文件 (abetterchoice.mg.cocoscreator.min.js) 放入 assets/script 目录中
 
-初始化SDK参数
+初始化配置参数与启动SDK
 
 ```typescript
+// 初始化配置参数
 const config = {
   gameId: "YOUR_GAME_ID", // 项目游戏ID，必选，可以在ABetterChoice平台管理页查看
-  apiKey: "YOUR_SECRET_KEY", // 项目API KEY，必选，可以在ABetterChoice平台管理页查看
+  apiKey: "YOUR_API_KEY", // 项目API KEY，必选，可以在ABetterChoice平台管理页查看
   autoTrack: {   // 可选，自动采集配置，默认全部打开
     mgShow: true,  // 自动采集，小程序启动，或从后台进入前台，可选
     mgHide: true,  // 自动采集，小程序从前台进入后台，可选
     mgShare: true, // 自动采集，小程序分享时自动采集，可选
   }
-}
+};
 
-// sdk启动代码
-// 登陆代码
+// 可选，打开SDK日志，默认关闭，上线前可关闭
+ABetterChoice.setLogLevel(0);
+
+// 必须，初始化并启动SDK，必须先调用，确保SDK初始化成功后再执行功能方法
+ABetterChoice.init(config).then((initResult) => {
+   console.log('初始化结果：' + initResult)
+  
+   // 必须，用户的登录唯一标识，此数据对应上报数据里的user_id，此时user_id的值为ABC
+   ABetterChoice.login('ABC');
+};
 ```
 
 
@@ -44,9 +54,10 @@ const config = {
 - **enableAutoExposure**：可选，实验分流使用，默认值为true。如果设置为false，当调用AB实验分流时，曝光数据将关闭自动上报。
 - **enableAutoPoll**：可选，实验分流使用，默认值为true。如果设置为true，实验和功能标志数据将每10分钟轮询并更新。
 
-警示：无论获取帐号ID是异步还是同步的，请在使用SDK接入完成后用logi接口进行帐号ID的登陆，以确保数据计算的准确性。
+**警示**：无论您获取帐号ID是异步还是同步的，请在使用SDK接入完成后用下面的**login**接口进行帐号ID的登陆，以确保数据计算结果的准确性。
+
 ```typescript
-// 用户的唯一标识，此数据对应上报数据里的user_id，此时user_id的值为ABC
+// 用户的唯一标识，此数据对应上报数据里的user_id，此时user_id的值为ABC，不登陆会影响数据计算结果的准确性
 ABetterChoice.login('ABC');
 ```
 
@@ -62,7 +73,8 @@ ABetterChoice.login('ABC');
 
 ## 二、常用功能
 
-在使用常用功能之前，确保SDK已初始化完毕并已登陆帐号ID
+在使用常用功能之前，确保SDK已初始化成功并已登陆帐号ID
+
 ### 2.1 设置帐号ID
 
 在用户进行登录时，可调用 `login` 来设置用户的账号 ID， SDK将会以账号 ID 作为身份识别 ID，并且设置的账号 ID 将会一直保留。
@@ -111,7 +123,7 @@ ABetterChoice.track({
 ### 2.4 获取AB实验
 
 ```typescript
-// 获取实验分流信息
+// 获取实验分流信息，默认会在获取分流信息同时会进行自动上报。
 const experiment = ABetterChoice.getExperiment('abc_layer_name');
 if (experiment === undefined) {
     // 无命中，执行默认版本
@@ -125,7 +137,7 @@ const shouldShowBanner = experiment.getBoolValue("should_show_banner", true);
 ### 2.5 实验曝光
 
 ```typescript
-// 当未设置enableAutoExposure时，您可以根据上面获取的实验分流信息进行手动记录曝光
+// 当设置enableAutoExposure为false时，您可以根据上面获取的实验分流信息进行手动记录曝光
 ABetterChoice.logExperimentExposure(experiment);
 ```
 
@@ -142,6 +154,7 @@ const boolValue = configInfo?.getBoolValue(false);
 // const stringValue = configInfo?.getStringValue('banner');
 // const numberValue = configInfo?.getNumberValue(1000);
 ```
+
 若配置了条件，如下图创建所示，假设您创造了开关配置参数名称为'new_feature_flag'，配置条件配置参数属性为'city'与'age'，条件参数属性值为'shenzhen'与'18'，则满足这个条件则会进行下发布尔值true。
 
 ![IMG](https://cdn.abetterchoice.cn/static/cms/5640e1e9ac.jpeg)
@@ -170,11 +183,11 @@ const boolValue = configInfo?.getBoolValue(false);
 [下载CocosCreator SDK](https://github.com/ABetterChoice/cocos-creator-sdk/archive/refs/heads/master.zip)，根据上面集成SDK的方式引入对应的文件之后，您就可以在代码中直接使用SDK功能，并开始上报数据了：
 
 ```typescript
+//初始化配置参数
 const config = {
   gameId: "YOUR_GAME_ID", //项目游戏ID，必选，可以在ABetterChoice平台管理页查看
-  secretKey: "YOUR_SECRET_KEY"，//项目API KEY，必选，可以在ABetterChoice平台管理页查看
-  unitId: "YOUR_LOGGIN_USER_ID", //用户帐号ID，必选，若不填，则在login之前都用访客ID做用户ID，可能会导致数据计算有误差
-  autoTrack: {   // 可选，自动采集配置
+  apiKey: "YOUR_API_KEY"，//项目API KEY，必选，可以在ABetterChoice平台管理页查看
+  autoTrack: {   // 可选，自动采集配置，默认全部打开
     mgShow: true,  // 自动采集，小程序启动，或从后台进入前台
     mgHide: true,  // 自动采集，小程序从前台进入后台
     mgShare: true, // 自动采集，小程序分享时自动采集
@@ -182,13 +195,14 @@ const config = {
 };
 // 打开SDK日志，默认关闭，上线前可关闭
 ABetterChoice.setLogLevel(0);
-// 初始化
+// 初始化并启动SDK
 await initResult = ABetterChoice.init(config);
 if (initResult) {
   console.log('初始化结果：' + initResult);
 }
-// 用户的登录帐号唯一标识，此数据对应上报数据里的user_id，此时user_id的值为ABC，相当于配置初始化参数unitId，若上面配置初始化参数已填，可不使用
+// 用户的登录帐号唯一标识，此数据对应上报数据里的user_id，此时user_id的值为ABC，不登陆会影响数据计算结果的准确性
 ABetterChoice.login('ABC');
+
 // 设置公共事件属性
 const commonProperties = {
     channel : "ta", //字符串
@@ -227,3 +241,4 @@ ABetterChoice.logExperimentExposure(experiment);
 // 获取配置开关名为：new_feature_flag的配置开关值信息
 const configObj = ABetterChoice.getConfig(["new_feature_flag"]);
 ```
+
