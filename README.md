@@ -25,21 +25,30 @@
 const config = {
   gameId: "YOUR_GAME_ID", // 项目游戏ID，必选，可以在ABetterChoice平台管理页查看
   apiKey: "YOUR_SECRET_KEY", // 项目API KEY，必选，可以在ABetterChoice平台管理页查看
- // unitId: "login_unitId", // 登陆的用户帐号，必选，若不填，则在login之前都用访客ID做用户ID，可能会导致数据计算有误差
-  autoTrack: {   // 可选，自动采集配置，默认全部关闭
+  autoTrack: {   // 可选，自动采集配置，默认全部打开
     mgShow: true,  // 自动采集，小程序启动，或从后台进入前台，可选
     mgHide: true,  // 自动采集，小程序从前台进入后台，可选
     mgShare: true, // 自动采集，小程序分享时自动采集，可选
   }
 }
+
+// sdk启动代码
+// 登陆代码
 ```
+
 
 配置对象**Config**其他可选参数说明：
 
 - **serverUrl**：可选，数据上报地址域名，默认是 https://data.abetterchoice.cn/。
 - **attributes**:  可选，实验分流属性条件使用，类型为{ string : string[] }，其中string为条件属性，string[]为对应的条件属性值数组
-- **enableAutoExposure**：可选，实验分流使用，默认值为false。如果设置为true，当调用AB实验分流时，曝光数据将自动上报。
+- **enableAutoExposure**：可选，实验分流使用，默认值为true。如果设置为false，当调用AB实验分流时，曝光数据将关闭自动上报。
 - **enableAutoPoll**：可选，实验分流使用，默认值为true。如果设置为true，实验和功能标志数据将每10分钟轮询并更新。
+
+警示：无论获取帐号ID是异步还是同步的，请在使用SDK接入完成后用logi接口进行帐号ID的登陆，以确保数据计算的准确性。
+```typescript
+// 用户的唯一标识，此数据对应上报数据里的user_id，此时user_id的值为ABC
+ABetterChoice.login('ABC');
+```
 
 **注意**：
 
@@ -53,11 +62,10 @@ const config = {
 
 ## 二、常用功能
 
-在使用常用功能之前，请先知悉当前的用户生成规则，SDK默认会生成随机数作为访客ID，并持久化存储访客ID在本地；用户未登录之前，会以访客ID作为身份识别ID。若用户登陆之后，将采用登陆ID做为用户的唯一识别标志。注意:访客 ID 在用户清理缓存 以及更换设备时将会发生变更。
-
+在使用常用功能之前，确保SDK已初始化完毕并已登陆帐号ID
 ### 2.1 设置帐号ID
 
-在用户进行登录时，可调用 `login` 来设置用户的账号 ID， SDK将会以账号 ID 作为身份识别 ID，并且设置的账号 ID 将会在调用 `logout` 之前一直保留。多次调用 `login` 将覆盖先前的账号 ID。
+在用户进行登录时，可调用 `login` 来设置用户的账号 ID， SDK将会以账号 ID 作为身份识别 ID，并且设置的账号 ID 将会一直保留。
 
 ```typescript
 // 用户的唯一标识，此数据对应上报数据里的user_id，此时user_id的值为ABC
